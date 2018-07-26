@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+	<data>
+        <!-- first add record then its action -->
+		<menuitem id="newmodule_menu_root" sequence="7" name="New Module" />
+
+		<!--Steps for creating menuitem 3-->
+        <!--note:-record id and menuitem action should be same-->
+        <!--if its root menu 
+        id="hr_details_menu_root"-->
+        <menuitem action="newmodule_action" 
+            id="newmodule_menu_action"
+            parent="newmodule_menu_root" sequence="1" />
+
+			<!--Steps for creating action 3-->
+            <!--note:-record id and menuitem action should be same-->
+            <!--step 1. added record with id and 'action model' -->
+        <record id="newmodule_action" model="ir.actions.act_window">
+
+            <!--step 2. add name -->
+            <field name="name">User Details</field>
+
+            <!--step 3. add type 'yhi use kro filal for this kind of work'-->
+            <field name="type">ir.actions.act_window</field>
+
+            <!--step 4. add 'res_model'in action !!:- 'yhi use kro filal for this kind of work' -->
+            <field name="res_model">newmodule</field>
+
+            <!--step 5. add view_mode:- choose the order->  from them first will be applied -->
+            <field name="view_mode">tree,kanban,form</field>
+
+            <!--step 6. add view_type:- will tell -->
+            <field name="view_type">form</field>
+
+            <!--step 7. add view_id :- the external identifier. -->
+            <!--But not using here, odoo'll give-->
+            <!-- <field name="view_id" ref="product.product_template_tree_view"/> -->
+
+            <!--step 8. add context:- to put values by default such as search or field value -->
+            <!--note this will be added on action view -->
+            <!--But not using here, odoo'll give-->
+            <!-- <field name="context">{"default_testdata":1}</field> -->
+
+            <!--step 9. add domain:- to filter on load-->
+            <!--note this will be added on action view -->
+            <!--But not using here, odoo'll give-->
+            <!-- Approach 1 
+            <field name="domain">[('testdata','=',1)]</field> -->
+
+            <!-- Approach 2 add below and remove above field, don't hurry to remove from model->testdata-->
+            <!--Note:- Below is a reference as you can access categ_id and it's further fields that shows up in sales->product->product category, all those fields on hover, their name can be seen -->
+
+            <!-- <field name="domain">[('categ_id.name','=','Hr')]</field> -->
+
+            <!--step 10. add help in html -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define new user.
+                </p>
+
+            <!--step 11. ctrl+c to stop server, up arrow to re run, refresh browser   -->
+            </field>
+        </record>
+        <!--closed-->
+
+		
+        	<!--Steps for (custom created)updating existing Form view -->
+            <!--step 1. create a record with id and 'view model' -->
+        <record id="newmodule_view_form" model="ir.ui.view">
+
+            <!--step 2. (not using) inherit if required, mention ref->externnal identifier -->
+            <!-- <field name="inherit_id" ref="product.product_template_only_form_view" /> -->
+
+            <!--step 3. use model 'yhi use kro filal for this kind of work'-->
+            <field name="model">newmodule</field>
+
+            <!--step 4. view type 'yhi use kro filal for this kind of work'-->
+            <!-- for now, not mentioning view_type bcoz <form>...</form> tag is defining that
+            it is an update for form.
+            Similarly, if want to update tree or kanban or search or any other view,
+            use corresponding tag and SUPPORTED FIELD.-->
+            <!-- SUPPORTED FIELD is highlighted for reason to stress more on
+            sheet tag and others are not supported in <kanban>...</kanban>
+            hence, use what's supported there -->
+            
+            <!-- <field name="view_type">form</field> -->
+
+            <!--step 5. update arch -->
+            <field name="arch" type="xml">
+                <form>
+                	<sheet>
+	                    <group>
+	                        <field name="name" required="1" />
+                            <field name="name" required="1" />
+                            <field name="name" required="1" />
+	                        <field name="create_date" readonly="1" />
+	                        <field name="__last_update" />
+	                        <field name="description" required="1" />
+	                    </group>
+
+	                </sheet>
+	                <!--mail thread widget-->
+	                <div class="oe_chatter">
+               			<field name="message_follower_ids" widget="mail_followers"/>
+                		<field name="message_ids" widget="mail_thread"/>
+            		</div>
+                </form>
+
+                <!--adding notebook (you may remove it)-->
+               
+
+            <!--step 6. update openerp file 'data':['hr_view.xml'], which you did already :-p -->
+
+            <!--step 7. ctrl+c to stop server, up arrow to re run, refresh browser   -->
+            </field>
+        </record>
+
+
+	</data>
+</openerp>

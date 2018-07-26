@@ -1,0 +1,173 @@
+<!--Steps for creating action 2-->
+			<!--note:-record id and menuitem action should be same-->
+			<!--step 1. added record with id and 'action model' -->
+		<record id="details_action_hr" model="ir.actions.act_window">
+
+			<!--step 2. add name -->
+            <field name="name">Hr Details</field>
+
+            <!--step 3. add type 'yhi use kro filal for this kind of work'-->
+            <field name="type">ir.actions.act_window</field>
+
+            <!--step 4. add 'res_model'in action !!:- 'yhi use kro filal for this kind of work' -->
+            <field name="res_model">res.users.details</field>
+
+            <!--step 5. add view_mode:- choose the order->  from them first will be applied -->
+            <field name="view_mode">tree,kanban,form</field>
+
+            <!--step 6. add view_type:- will tell -->
+            <field name="view_type">form</field>
+
+            <!--step 7. add view_id :- the external identifier. -->
+            <!--But not using here, odoo'll give-->
+            <!-- <field name="view_id" ref="product.product_template_tree_view"/> -->
+
+            <!--step 8. add context:- to put values by default such as search or field value -->
+            <!--note this will be added on action view -->
+            <!--But not using here, odoo'll give-->
+            <!-- <field name="context">{"default_testdata":1}</field> -->
+
+            <!--step 9. add domain:- to filter on load-->
+            <!--note this will be added on action view -->
+            <!--But not using here, odoo'll give-->
+            <!-- Approach 1 
+            <field name="domain">[('testdata','=',1)]</field> -->
+
+            <!-- Approach 2 add below and remove above field, don't hurry to remove from model->testdata-->
+            <!--Note:- Below is a reference as you can access categ_id and it's further fields that shows up in sales->product->product category, all those fields on hover, their name can be seen -->
+
+            <!-- <field name="domain">[('categ_id.name','=','Hr')]</field> -->
+
+            <!--step 10. add help in html -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define new hr details.
+                </p>
+
+            <!--step 11. ctrl+c to stop server, up arrow to re run, refresh browser   -->
+            </field>
+        </record>
+
+
+
+<!--Steps for creating action 1 (duplicated)-->
+            <!--note:-record id and menuitem action should be same-->
+            <!--step 1. added record with id and 'action model' -->
+        <record id="product.product_template_action_hr" model="ir.actions.act_window">
+
+            <!--step 2. add name -->
+            <field name="name">Hr</field>
+
+            <!--step 3. add type 'yhi use kro filal for this kind of work'-->
+            <field name="type">ir.actions.act_window</field>
+
+            <!--step 4. add res_model:- 'yhi use kro filal for this kind of work' -->
+            <field name="res_model">product.template</field>
+
+            <!--step 5. add view_mode:- choose the order->  from them first will be applied -->
+            <field name="view_mode">kanban,tree,form</field>
+
+            <!--step 6. add view_type:- will tell -->
+            <field name="view_type">form</field>
+
+            <!--step 7. add view_id :- the external identifier-->
+            <!-- also responsible for setting default view which,
+             is first in order as mentioned in view_mode -->
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+
+            <!--step 8. add context:- to put values by default such as search or field value -->
+            <!--note this will be added on action view -->
+            <field name="context">{"default_testdata":1}</field>
+
+            <!--step 9. add domain:- to filter on load-->
+            <!--note this will be added on action view -->
+
+            <!-- Approach 1 
+            <field name="domain">[('testdata','=',1)]</field> -->
+
+            <!-- Approach 2 add below and remove above field, don't hurry to remove from model->testdata-->
+            <!--Note:- Below is a reference as you can access categ_id and it's further fields that shows up in sales->product->product category, all those fields on hover, their name can be seen -->
+
+            <field name="domain">[('categ_id.name','=','Hr')]</field>
+
+            <!--step 10. add help in html -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new hr.
+                </p>
+
+            <!--step 11. ctrl+c to stop server, up arrow to re run, refresh browser   -->
+            </field>
+        </record>
+
+            <!--Steps for updating existing Form view (of CUSTOM CREATED action and menuitem)-->
+            <!-- for illustrating notebook in form view -->
+            <!--step 1. create a record with id and 'view model' -->
+        <record id="hr_salary_view_form" model="ir.ui.view">
+
+            <!--step 2. (not using) inherit if required, mention ref->externnal identifier -->
+            <!-- <field name="inherit_id" ref="product.product_template_only_form_view" /> -->
+
+            <!--step 3. use model 'yhi use kro filal for this kind of work'-->
+            <!-- hr.detail  -->
+            <field name="model">hr.salary</field>
+
+            <!--step 4. use model 'yhi use kro filal for this kind of work'-->
+            <!-- for now, not mentioning view_type bcoz <form>...</form> tag is defining that
+            it is an update for form.
+            Similarly, if want to update tree or kanban or search or any other view,
+            use corresponding tag and SUPPORTED FIELD.-->
+            <!-- SUPPORTED FIELD is highlighted for reason to stress more on
+            sheet tag and others are not supported in <kanban>...</kanban>
+            hence, use what's supported there -->
+            <!-- <field name="view_type">form</field> -->
+
+            <!--step 5. update arch -->
+            <field name="arch" type="xml">
+                <sheet>
+                    <form>
+                        <group>
+                            <field name="name" />
+                        </group>
+                        <!-- for adding notebook by creating another model, menuitem, action record, form view huhh!! -->
+                        <!-- this is something i can not explain
+                        please ignore STARTS-->
+                        <notebook>
+                                <page name="hrsalarynotebook" string="hr salary notebook">
+                                    <!-- this  relative_ids field is present in hr.salary class-->
+                                    <field name="relative_ids" widget="one2many_list">
+                                        <!--in below tree tag strings="Menu Items" editable="bottom" or without it-->
+                                        <!-- feel like tree view tag?? :- will tell later!! -->
+                                        <tree editable="bottom">
+                                            <!-- below fields are mentioned is another class that is hr.detail -->
+                                            <!-- they are accessible due to 
+                                            first: One2many relation (in same class i.e, hr.salary)
+                                            the: Many2one relation (in another class i.e, hr.detail)-->
+                                            <field name="name" />
+                                            <field name="join_date" />
+                                            <field name="user_id" />
+                                            <field name="notes" />
+                                        </tree>
+                                    </field>
+                                    <group>
+                                        <field name="salary" />
+                                        <field name="remark" />
+                                    </group>
+                                </page>
+                        </notebook>
+                        <!-- this is something i can not explain
+                        please ignore ENDS-->
+                    </form>
+                </sheet>
+            <!--step 6. update openerp file 'data':['hr_view.xml'], which you did already :-p -->
+
+            <!--step 7. ctrl+c to stop server, up arrow to re run, refresh browser   -->
+            </field>
+        </record>
+
+
+
+        <!-- notes -->
+        <!-- 
+        
+         -->
